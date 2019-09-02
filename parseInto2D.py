@@ -6,7 +6,7 @@ from itertools import chain
 top_row = 550
 bottom_row = 4500
 
-slices = range(1000, 2000, 500) #chain(range(-900, -200, 100), range(-200, 100, 20), range(100, 300, 100), range(300, 1000, 150), range(1000, 1500, 500))
+slices = chain(range(-900, -200, 100), range(-200, 100, 20), range(100, 300, 100), range(300, 1000, 150), range(1000, 2000, 500))
 
 # DON'T CHANGE ME
 raw_data = np.loadtxt(open("./psdem.csv", "rb"), skiprows=top_row, max_rows=bottom_row-top_row, delimiter=",", dtype=np.int16)
