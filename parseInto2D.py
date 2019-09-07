@@ -4,8 +4,6 @@ from itertools import chain
 from subprocess import run
 from multiprocessing import Process
 
-
-
 # DON'T CHANGE ME
 def gen_for_slice(bottom, top):
     data = np.interp(raw_data, (bottom, top), (0, 255))
@@ -21,6 +19,7 @@ def gen_for_slice(bottom, top):
 
     filename = "./export/" + str(bottom) + ".png"
     filenameBW = "./export/BW" + str(bottom) + ".bmp"
+    filenameBWSVG = "./export/BW" + str(bottom) + ".svg"
 
     img.save(filename, "PNG")
 
@@ -31,11 +30,11 @@ def gen_for_slice(bottom, top):
 
     img.save(filenameBW, "BMP")
 
-    cmd = "potrace " + filenameBW + " -s -t 100"
+    cmd = "potrace " + filenameBW + " -s -t 100 --color \"#ffffff\" --fillcolor \"#ffffff\""
     run(cmd, shell=True, check=True)
 
-    #Change it so that the svg line is hairline black on white w/sed
-    #Call it good?
+    replace = "sed -i -e s/stroke\=\\\"none\\\"/stroke\=\\\"000000\\\"\ stroke\-width\=\\\"0\.01\\\"/g " + filenameBWSVG
+    run(replace, shell=True, check=True)
 
 
 if __name__ == '__main__':
